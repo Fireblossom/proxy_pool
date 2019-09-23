@@ -15,6 +15,7 @@ import re
 import sys
 import requests
 from time import sleep
+from lxml import html
 
 sys.path.append('..')
 
@@ -322,7 +323,14 @@ class GetFreeProxy(object):
                 r.text)
             for proxy in proxies:
                 yield ':'.join(proxy)
-
+      
+    @staticmethod
+    def freeProxy_us(max_page=1):
+         base_url = 'http://free-proxy.cz/en/proxylist/country/US/http/uptime/all'
+         r = requests.get(base_url)
+         doc = html.fromstring(r.text)
+         table = doc
+      
 
 if __name__ == '__main__':
     from CheckProxy import CheckProxy
